@@ -10,7 +10,8 @@ While the system has been partially implemented, full functionality is still a w
 - **AutoHotkey**: Utilized to hide the mouse cursor during operation.
 - **FreePIE (Programmable Input Emulator)**: Used for scripting and managing input mappings and force feedback translation.
 
-## Content manager Control Scheme
+## Content manager Control Scheme 
+   select wheel as an input method
 
 ### Axis Assignments
 - **Axis 1**: Steering (mouse drag)
