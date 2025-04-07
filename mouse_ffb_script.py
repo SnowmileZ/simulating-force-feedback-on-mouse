@@ -19,9 +19,7 @@ INT32_MAX = (2 ** 14) - 1
 INT32_MIN = -INT32_MAX
 
 # === Configuration Settings ===
-MOUSE_SENSITIVITY = 4.0
-SENSITIVITY_CENTER_REDUCTION = 1.0
-SCALE = 1000
+MOUSE_SENSITIVITY = 2.0
 THROTTLE_INVERSION = BRAKING_INVERSION = CLUTCH_INVERSION = 1
 THREAD_INTERVAL = 5  # Execution interval in milliseconds
 
@@ -61,12 +59,12 @@ for i, key in enumerate(BUTTON_KEYS):
 shared_memory.seek(0)
 telemetry_values = telemetry_struct.unpack(shared_memory.read(telemetry_struct.size))
 ffb_value = telemetry_values[FFB_INDEX]
+ffb_round = round(ffb_value * 100)
 
 # === Steering Logic ===
-steering_center_reduction = SENSITIVITY_CENTER_REDUCTION ** (1 - abs(steering / steering_max))
-steering += (float(mouse.deltaX) * MOUSE_SENSITIVITY) / steering_center_reduction
+steering += ((float(mouse.deltaX)-ffb_round) * MOUSE_SENSITIVITY)
 steering = max(min(steering, steering_max), steering_min)
-v.x = int(round(steering - ffb_value * SCALE))
+v.x = int(steering)
 
 # === Throttle Logic ===
 if keyboard.getKeyDown(Key.Q) and keyboard.getKeyDown(Key.W): 
@@ -106,3 +104,5 @@ diagnostics.watch(vJoy[0].y)
 diagnostics.watch(vJoy[0].rz)
 diagnostics.watch(vJoy[0].z)
 diagnostics.watch(ffb_value)
+diagnostics.watch(ffb_round)
+diagnostics.watch(float(mouse.deltaX))
