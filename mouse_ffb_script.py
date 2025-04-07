@@ -19,7 +19,7 @@ INT32_MAX = (2 ** 14) - 1
 INT32_MIN = -INT32_MAX
 
 # === Configuration Settings ===
-MOUSE_SENSITIVITY = 2.0
+MOUSE_SENSITIVITY = 5.0
 THROTTLE_INVERSION = BRAKING_INVERSION = CLUTCH_INVERSION = 1
 THREAD_INTERVAL = 5  # Execution interval in milliseconds
 
@@ -62,7 +62,7 @@ ffb_value = telemetry_values[FFB_INDEX]
 ffb_round = round(ffb_value * 100)
 
 # === Steering Logic ===
-steering += ((float(mouse.deltaX)-ffb_round) * MOUSE_SENSITIVITY)
+steering += ((float(mouse.deltaX)* MOUSE_SENSITIVITY) - ffb_round)
 steering = max(min(steering, steering_max), steering_min)
 v.x = int(steering)
 
