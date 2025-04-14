@@ -19,7 +19,7 @@ INT32_MAX = (2 ** 14) - 1
 INT32_MIN = -INT32_MAX
 
 # === Configuration Settings ===
-MOUSE_SENSITIVITY = 5.0
+MOUSE_SENSITIVITY = 3.0
 THROTTLE_INVERSION = BRAKING_INVERSION = CLUTCH_INVERSION = 1
 THREAD_INTERVAL = 5  # Execution interval in milliseconds
 
@@ -59,7 +59,7 @@ for i, key in enumerate(BUTTON_KEYS):
 shared_memory.seek(0)
 telemetry_values = telemetry_struct.unpack(shared_memory.read(telemetry_struct.size))
 ffb_value = telemetry_values[FFB_INDEX]
-ffb_round = round(ffb_value * 100)
+ffb_round = round(ffb_value * 500)
 
 # === Steering Logic ===
 steering += ((float(mouse.deltaX)* MOUSE_SENSITIVITY) - ffb_round)
